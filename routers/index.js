@@ -27,8 +27,7 @@ router.get('/user/:id', function (req, res) {
     });
 });
 
-router.get('/company/:id', [
-], function (req, res) {
+router.get('/company/:id', [], function (req, res) {
     if (!validationResult(req).isEmpty()) {
         return res.status(422).json({errors: validationResult(req).array()});
     }
