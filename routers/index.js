@@ -28,12 +28,10 @@ router.get('/user/:id', function (req, res) {
 });
 
 router.get('/company/:id', [
-    check('id').isInt().withMessage('Parameter must be integer')
 ], function (req, res) {
     if (!validationResult(req).isEmpty()) {
         return res.status(422).json({errors: validationResult(req).array()});
     }
-    console.log(req.params.id);
     models.Company.findOne({
         where: {
             id: req.params.id,
@@ -53,8 +51,9 @@ router.get('/company/:id', [
 router.post('/user', [
     validate.addUser
 ], function (req, res) {
+    const errors = validationResult(req);
     if (!validationResult(req).isEmpty()) {
-        return res.status(422).json({errors: validationResult(req).array()});
+        return res.status(422).json({errors: errors.array()});
     }
     let data = req.body;
     data.status = constants.USER_STATUS_ACTIVE;
